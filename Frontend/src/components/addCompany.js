@@ -28,6 +28,7 @@ export default function AddCompany(props) {
   const [errorMsg, setErrorMsg] = React.useState("Enter Password");
   const [defaultStatus, setdefaultStatus] = React.useState(props.status);
   const [item, setItem] = React.useState(projectsList);
+  const userrole = sessionStorage.getItem('userRole')
 
 
   const addproject = async () => {
@@ -125,7 +126,8 @@ export default function AddCompany(props) {
     // setPassword("");
     // setError(false);
   };
-
+ 
+  if(userrole==='CORE') {
   return (
     <React.Fragment>
       <Button
@@ -264,10 +266,9 @@ export default function AddCompany(props) {
     </React.Fragment>
   );
 }
-
-const tags = [
-  { name: "Tag 1" },
-  { name: "Tag 2" },
-  { name: "Tag 3" },
-  { name: "Tag 4" },
-];
+else{
+  return(
+    <></>
+  )
+}
+}

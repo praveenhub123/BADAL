@@ -5,7 +5,6 @@ const Organisation = require('../../models/organisation')
 const ModuleTeam = require('../../models/moduleTeam');
 const Module = require('../../models/module');
 const { createProjectGitlab } = require('../../gitlab/index');
-const {storeFile } = require('../../index');
 module.exports = {
     GetAllProjects : async function(args,req){
       if(!req.isAuth)
@@ -54,16 +53,7 @@ module.exports = {
         try {
 
           const gitlabProject = await createProjectGitlab(args.projectinput);
-          var gitlabProjectId,ssh_url_to_repo,http_url_to_repo,web_url;
-          if(gitlabProject)
-          {
-            gitlabProjectId = gitlabProject.id;
-            ssh_url_to_repo = gitlabProject.ssh_url_to_repo;
-            http_url_to_repo = gitlabProject.http_url_to_repo;
-            web_url = gitlabProject.web_url;
-          }
           
-          if(gitlabProject)
           var ngoId = (args.projectinput.ngoId)?args.projectinput.ngoId:req.orgId;
           const project = new Project({
             name : args.projectinput.name,
@@ -79,10 +69,10 @@ module.exports = {
             progress : "0",
             tags : args.projectinput.tags,
             noOfModules : "0",
-            gitlabProjectId : gitlabProjectId,
-            ssh_url_to_repo : ssh_url_to_repo,
-            http_url_to_repo : http_url_to_repo,
-            web_url : web_url,
+            gitlabProjectId : gitlabProject.id,
+            ssh_url_to_repo : gitlabProject.ssh_url_to_repo,
+            http_url_to_repo : gitlabProject.http_url_to_repo,
+            web_url : gitlabProject.web_url,
           });
     
           const result = await project.save();
@@ -111,7 +101,10 @@ module.exports = {
         {
           throw new Error(errorName.UNAUTHORIZED);
         }
-        
+        if(!(args.projectId == req.orgId || req.userType == usertype.IIITH))
+        {
+          throw new Error("Project Does not belong to you.");
+        }
         try
         {
           const project = await Project.findOne({_id:args.projectId});
@@ -149,7 +142,5 @@ module.exports = {
           throw err;
         }
       }
-
-      
 }
 

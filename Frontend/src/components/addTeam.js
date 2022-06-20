@@ -18,6 +18,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Switch from "@mui/material/Switch"; */
 import { TextField } from "@mui/material";
+import { render } from "@testing-library/react";
 //import Alert from "@mui/material/Alert";
 // import axios from 'axios';
 
@@ -34,7 +35,7 @@ export default function AddTeam(props) {
   const [errorMsg, setErrorMsg] = React.useState("Enter Password");
   const [defaultStatus, setdefaultStatus] = React.useState(props.status);
   const [employees, setEmployees] = React.useState([])
-
+  const userrole = sessionStorage.getItem('userRole')
   const [teamName, setTeamName] = React.useState("");
   const [participantsO, setParticipantsO] = React.useState([]);
   const [participants, setParticipants] = React.useState([]);
@@ -154,6 +155,7 @@ export default function AddTeam(props) {
   
   };
 
+  if(userrole==='COMP'||'CORE') {
   return (
     <React.Fragment>
       <Button
@@ -289,13 +291,20 @@ export default function AddTeam(props) {
     </React.Fragment>
   );
 }
+else{
+  return(
+    <></>
+  )
+}
+}
 
-const employees = [
-  { name: "Aditya" },
-  { name: "Abhishek" },
-  { name: "Chandan" },
-  { name: "Ross" },
-];
+
+// const employees = [
+//   { name: "Aditya" },
+//   { name: "Abhishek" },
+//   { name: "Chandan" },
+//   { name: "Ross" },
+// ];
 
 // const skills = [
 //   { name: "Frontend" },

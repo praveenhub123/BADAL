@@ -157,7 +157,7 @@ function Module(props) {
               <Select
                 id="select-autowidth"
                 value={status}
-//                 onChange={handleChange}
+                // onChange={handleChange}
                 label="Status"
               >
                 <MenuItem value={10}>Ongoing</MenuItem>

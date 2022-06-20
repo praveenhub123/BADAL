@@ -2,7 +2,7 @@ import LandingPage from "./components/materialSignin";
 import SignupPage from "./components/materialSignup";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Companies from "./components/pages/companies";
-import { DashboardLayout } from "./components/default";
+import React, { useEffect, useState } from "react";
 import Projects from "./components/pages/projects";
 import MyProjects from "./components/pages/myProjects";
 import ProjectBreakdown from "./components/pages/projectBreakdown";
@@ -16,21 +16,38 @@ import Navbar from "./components/NewNavbar";
 import UserCard from "./components/pages/UserCard";
 import Box from "@mui/material/Box";
 import Test from "./components/test";
+import { Divider, Typography } from "@mui/material";
+import Header from "../src/components/Navbar/Header";
 
 // GraphQL
 import { client } from "./Apollo";
 import { ApolloProvider } from "@apollo/client";
+// import NavBarSwitcher from "./components/Navbar/NavbarSwitcher";
 
 // const client = new ApolloClient({
 //   uri: "http://localhost:3000/graphql/",
 //   cache: new InMemoryCache()
 // });
 
+
 const App = () => {
+  const [loggedIn, setLoggedIn] = useState(sessionStorage.getItem("LoginStatus"));
+
+  const login = sessionStorage.getItem('LoginStatus');
+  
+  function NavBarSwitcher() {
+  if ( login === 'true') {
+      return (<Navbar />);
+    } 
+  else {
+      return (<Header />);
+    }
+  }
+
   return (
     <ApolloProvider client={client}>
       <BrowserRouter>
-        <Navbar />
+        <NavBarSwitcher />
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
           <Route path="/signup" element={<SignupPage />} />
@@ -51,23 +68,25 @@ const App = () => {
         <Box
           sx={{
             width: "100%",
-            height: 50,
+            height: 40,
+            textAlign: "center",
+            justifyContent:"center",
+            alignItems:"center",
+            // padding: "25px",
+            position: "fixed",
+            left: "0",
+            bottom: "0",
+              // height: "60px",
+            backgroundColor:"#94e6ff",
+            width: "100%",
           }}
         >
-          <div
-            style={{
-              textAlign: "center",
-              padding: "20px",
-              position: "fixed",
-              left: "0",
-              bottom: "0",
-              height: "60px",
-              width: "100%",
-              backgroundColor: "#ecf7ff",
-            }}
-          >
-            Powered by real page
-          </div>
+          <Divider variant="middle" />
+          <Typography
+           color="textPrimary"
+           variant="h6">
+            Powered by Real Page
+          </Typography>
         </Box>
       </BrowserRouter>
     </ApolloProvider>

@@ -23,6 +23,7 @@ export default function AddEmployee(props) {
   const [error, setError] = React.useState(false);
   const [errorMsg, setErrorMsg] = React.useState("Enter Password");
   const [defaultStatus, setdefaultStatus] = React.useState(props.status);
+  const userrole = sessionStorage.getItem('userRole')
 
   const { data } = useQuery(GET_SKILLS)
   var [tagOptions, setTagOptions] = React.useState([])
@@ -126,6 +127,8 @@ export default function AddEmployee(props) {
     setPassword("");
     setError(false);
   };
+
+  if(userrole==='CORE') {
 
   return (
     <React.Fragment>
@@ -234,4 +237,10 @@ export default function AddEmployee(props) {
       </Dialog>
     </React.Fragment>
   );
+}
+else{
+  return(
+    <></>
+  )
+}
 }

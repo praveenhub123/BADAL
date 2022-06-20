@@ -37,9 +37,6 @@ module.exports = {
         }
     },
     GetSkills : async (args,req) => {
-        if(!req.isAuth){
-            throw new Error(errorName.UNAUTHORIZED);
-        }
         const skills = await SkillTags.find();
         return skills.map(skill => {
             return {...skill._doc,_id:skill.id};

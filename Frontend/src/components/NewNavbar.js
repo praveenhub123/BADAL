@@ -7,16 +7,11 @@ import FilterDramaIcon from '@mui/icons-material/FilterDrama';
 import Fuse from "fuse.js";
 import LogoutIcon from "@mui/icons-material/Logout";
 import LoginIcon from "@mui/icons-material/Login";
-
+import {handleLogout} from "./materialSignin"
 import { Typography, Avatar } from "@material-ui/core";
 import sitelogo from "../icons/site-logo.png"
 const pages = [
-  // {
-  //   Name: "Dashboard",
-  //   to: "/dashboard",
-  //   icon: "bi bi-speedometer2",
-  //   tag: ["core-team", "ngo", "company", "team"],
-  // },
+  
   {
     Name: "NGOs",
     to: "/ngo",
@@ -59,7 +54,11 @@ const pages = [
   // },
 ];
 
-const Navbar = () => {
+const Navbar = props => {
+
+  const [loggedIn, setLoggedIn] = useState(sessionStorage.getItem("LoginStatus"));
+
+
   function animation() {
     var tabsNewAnim = $("#navbarSupportedContent");
     var activeItemNewAnim = tabsNewAnim.find(".active");
@@ -109,6 +108,7 @@ const Navbar = () => {
   const render_page = results.map((result) => result.item);
 
   const clear = () => {
+    localStorage.removeItem("LoginStatus");
     sessionStorage.removeItem("projectId");
     sessionStorage.removeItem("ngoId");
     sessionStorage.removeItem("moduleId");
@@ -126,11 +126,13 @@ const Navbar = () => {
     }
 
     if (e.target.textContent === "Log Out") {
+      localStorage.removeItem('LoginStatus');  // delete the item
+      localStorage.clear();
       sessionStorage.removeItem("token");
       clear();
     }
   };
-
+    
   return (
     <nav className="navbar navbar-expand-lg navbar-mainbg" id="listIcon">
       <NavLink className="navbar-brand navbar-logo" to="/nav" exact>
@@ -193,8 +195,7 @@ const Navbar = () => {
               className="nav-link"
               to={"/"}
               exact
-              onClick={(e) => clearSession(e)}
-            >
+              onClick={handleLogout}>
               <LogoutIcon />
             </NavLink>
           </li>
@@ -205,5 +206,6 @@ const Navbar = () => {
       </div>
     </nav>
   );
-};
+
+      };
 export default Navbar;

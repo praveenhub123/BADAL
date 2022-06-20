@@ -15,7 +15,6 @@ import Team from "./components/pages/Team";
 import Ngo from "./components/pages/ngos";
 import { SideBarNew } from "./components/SideBarNew";
 import Navbar from "./components/NewNavbar"; */
-import { BrowserRouter,Routes,Route } from 'react-router-dom';
 import App from "./App"; 
 /* 
 sessionStorage.setItem("type", "core-team");
@@ -23,9 +22,7 @@ sessionStorage.setItem("entity", "core-team");
  */
 const a = sessionStorage.getItem("type")? null : sessionStorage.setItem("type", "core-team")
 const b = sessionStorage.getItem("entity")? null : sessionStorage.setItem("entity", "core-team")
-const c = sessionStorage.getItem("company")
-  ? null
-  : sessionStorage.setItem("company", "core-team");
+const c = sessionStorage.getItem("company")? null: sessionStorage.setItem("company", "core-team");
 
 /* class App extends React.Component {
   render() {
@@ -67,11 +64,7 @@ ReactDOM.render(<App />, rootElement);
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-    <Routes>
-      <Route path="/*" element={<App />} />
-    </Routes>   
-    </BrowserRouter>
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );

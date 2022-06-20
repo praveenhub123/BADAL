@@ -16,7 +16,7 @@ module.exports = {
         {
             throw new Error(errorName.IIIT_CORE_ACCESS_ONLY);
         }
-
+        
             const newModule= new Module({
                 projectId: args.moduleInput.projectId,
                 description: args.moduleInput.description,
@@ -76,18 +76,29 @@ module.exports = {
           throw new Error(errorName.UNAUTHORIZED);
         }
         try{
-            const module = await Module.findOne({_id : args.moduleId});
-            module.status = args.status;
-            var projectId = module.projectId;
-            const result = await module.save();
-            
+            ModuleTeam.updateOne({'modules.moduleId' : args.moduleId},
+            {
+                '$set' : {
+                    'modules.$.Status' : args.status,
+                },
+                function(err,module) {
+                    if(err)
+                    {
+                        throw err;
+                    }
+                    else 
+                    {
+                        return args.status;
+                    }
+                }
+            });
 
-            const project = await Project.findOne({_id : projectId});
+            const project = await Project.findOne({_id : args.moduleInput.projectId});
             var k = parseInt(project.noOfModules);
-            var noOfCompletedModules = await Module.countDocuments({projectId : projectId,status: "COMPLETED"});
+            var noOfCompletedModules = await Module.countDocuments({projectId : args.moduleInput.projectId,status: "COMPLETED"});
             project.progress = ((noOfCompletedModules/k)*100).toString();
             await project.save();
-            return {...result._doc,_id:result.id};
+            
         }
         catch{
             throw err;

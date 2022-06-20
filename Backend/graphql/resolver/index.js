@@ -6,7 +6,6 @@ const teamResolver = require('./team');
 const taskResolver = require("./task");
 const skillResolver = require("./skills");
 const userResolver = require("./User");
-const minioResolver = require("./minio");
 
 const rootResolver = {
   ...authResolver,
@@ -17,7 +16,6 @@ const rootResolver = {
   ...taskResolver,
   ...skillResolver,
   ...userResolver,
-  ...minioResolver,
 };
 
 module.exports = rootResolver;

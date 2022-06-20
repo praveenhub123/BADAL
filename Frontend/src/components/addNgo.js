@@ -21,10 +21,13 @@ import { CREATE_NGO } from "../graphQL/mutations";
 import { Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import IconButton from "@mui/material/IconButton";
+import { render } from "@testing-library/react";
 //import Alert from "@mui/material/Alert";
 // import axios from 'axios';
 
+
 export default function AddNgo(props) {
+
   const userId = props.id;
   const [open, setOpen] = React.useState(false);
   const [fullWidth, setFullWidth] = React.useState(true);
@@ -35,6 +38,7 @@ export default function AddNgo(props) {
   const [errorMsg, setErrorMsg] = React.useState("Enter Password");
   const [defaultStatus, setdefaultStatus] = React.useState(props.status);
   const [item, setItem] = React.useState(projectsList);
+  const userrole = sessionStorage.getItem('userRole')
 
   const addproject = async () => {
     console.log(name);
@@ -50,6 +54,8 @@ export default function AddNgo(props) {
     });
   };
 
+    
+  
   const [pname, setPname] = React.useState("");
   const [desc, setDesc] = React.useState("");
   const [problemStatement, setProblemStatement] = React.useState("");
@@ -84,8 +90,13 @@ export default function AddNgo(props) {
     setWebsite(e.target.value);
   };
 
+ 
+    
+
   const handleClickOpen = () => {
-    setOpen(true);
+    
+      setOpen(true);
+           
   };
 
   const handleClose = () => {
@@ -110,6 +121,7 @@ export default function AddNgo(props) {
       setPassword(event.target.value);
     }
   };
+
 
   const [addNGO] = useMutation(CREATE_NGO, {
     onCompleted: (data) => {
@@ -152,144 +164,157 @@ export default function AddNgo(props) {
     setError(false);
   };
 
-  return (
-    <React.Fragment>
+
+
+  if(userrole === 'CORE') {
+  
+      return (
+        <React.Fragment>
+      
       <Button
-        variant="contained"
-        onClick={handleClickOpen}
-        style={{ display: "flex" }}
-      >
-        {"Add NGO"}
-      </Button>
-      <Dialog
-        fullWidth={fullWidth}
-        maxWidth={maxWidth}
-        open={open}
-        onClose={handleClose}
-        style={{ cursor: "pointer" }}
-      >
-        <Typography
-          display="flex"
-          color="#808080"
-          sx={{
-            justifyContent: "Right",
-            marginTop: 2,
-            marginRight: 2,
-            alignContent: "Right",
-          }}
-        >
-          <IconButton>
-            <CloseIcon fontSize="large" onClick={handleClose} />
-          </IconButton>
-        </Typography>
-        <DialogTitle>Add NGO</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            {/* Current Status : {defaultStatus} */}
-          </DialogContentText>
-          <Box
-            noValidate
-            component="form"
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              m: "auto",
-              width: "400px",
-            }}
+            variant="contained"
+            onClick={handleClickOpen}
+            style={{ display: "flex" }}
           >
-            <TextField
-              autoFocus
-              margin="dense"
-              id="Pname"
-              label="NGO Name"
-              type="text"
-              fullWidth
-              variant="standard"
-              onChange={handleName}
-              // onKeyDown={handlePasswordInput}
-            />
-            <TextField
-              // autoFocus
-              multiline
-              margin="dense"
-              id="password"
-              label="Description"
-              type="text"
-              fullWidth
-              variant="standard"
-              // value={desc}
-              onChange={handleDesc}
-              // onKeyDown={handlePasswordInput}
-            />
-            <TextField
-              // autoFocus
-              multiline
-              margin="dense"
-              id="password"
-              label="Address"
-              type="text"
-              fullWidth
-              variant="standard"
-              // value={problemStatement}
-              onChange={handleAddress}
-              // onKeyDown={handlePasswordInput}
-            />
-            <TextField
-              // autoFocus
-              multiline
-              margin="dense"
-              id="password"
-              label="Email"
-              type="text"
-              fullWidth
-              variant="standard"
-              // value={problemStatement}
-              onChange={handleEmail}
-              // onKeyDown={handlePasswordInput}
-            />
-            <TextField
-              // autoFocus
-              multiline
-              margin="dense"
-              id="password"
-              label="Phone Number"
-              type="text"
-              fullWidth
-              variant="standard"
-              // value={problemStatement}
-              onChange={handlePhone}
-              // onKeyDown={handlePasswordInput}
-            />
-            <TextField
-              // autoFocus
-              multiline
-              margin="dense"
-              id="password"
-              label="Website"
-              type="url"
-              fullWidth
-              variant="standard"
-              // value={problemStatement}
-              onChange={handleWebsite}
-              // onKeyDown={handlePasswordInput}
-            />
-            {/* {error ? (
-                            <Alert severity="error">{errorMsg}</Alert>
-                        ) : (
-                            <Alert severity="success">{errorMsg}</Alert>
-                        )} */}
-            <DialogActions>
-              <Button onClick={addproject}>Add</Button>
-            </DialogActions>
-          </Box>
-        </DialogContent>
-        {/* <DialogActions>
-                    <Button onClick={handleClose}>Close</Button>
-                </DialogActions> */}
-      </Dialog>
-    </React.Fragment>
-  );
-}
+            {"Add NGO"}
+          </Button>
+          
+           <Dialog
+            fullWidth={fullWidth}
+            maxWidth={maxWidth}
+            open={open}
+            onClose={handleClose}
+            style={{ cursor: "pointer" }}
+          >
+            <Typography
+              display="flex"
+              color="#808080"
+              sx={{
+                justifyContent: "Right",
+                marginTop: 2,
+                marginRight: 2,
+                alignContent: "Right",
+              }}
+            >
+              <IconButton>
+                <CloseIcon fontSize="large" onClick={handleClose} />
+              </IconButton>
+            </Typography>
+            <DialogTitle>Add NGO</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                {/* Current Status : {defaultStatus} */}
+              </DialogContentText>
+              <Box
+                noValidate
+                component="form"
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  m: "auto",
+                  width: "400px",
+                }}
+              >
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="Pname"
+                  label="NGO Name"
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                  onChange={handleName}
+                  // onKeyDown={handlePasswordInput}
+                />
+                <TextField
+                  // autoFocus
+                  multiline
+                  margin="dense"
+                  id="password"
+                  label="Description"
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                  // value={desc}
+                  onChange={handleDesc}
+                  // onKeyDown={handlePasswordInput}
+                />
+                <TextField
+                  // autoFocus
+                  multiline
+                  margin="dense"
+                  id="password"
+                  label="Address"
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                  // value={problemStatement}
+                  onChange={handleAddress}
+                  // onKeyDown={handlePasswordInput}
+                />
+                <TextField
+                  // autoFocus
+                  multiline
+                  margin="dense"
+                  id="password"
+                  label="Email"
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                  // value={problemStatement}
+                  onChange={handleEmail}
+                  // onKeyDown={handlePasswordInput}
+                />
+                <TextField
+                  // autoFocus
+                  multiline
+                  margin="dense"
+                  id="password"
+                  label="Phone Number"
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                  // value={problemStatement}
+                  onChange={handlePhone}
+                  // onKeyDown={handlePasswordInput}
+                />
+                <TextField
+                  // autoFocus
+                  multiline
+                  margin="dense"
+                  id="password"
+                  label="Website"
+                  type="url"
+                  fullWidth
+                  variant="standard"
+                  // value={problemStatement}
+                  onChange={handleWebsite}
+                  // onKeyDown={handlePasswordInput}
+                />
+                {/* {error ? (
+                                <Alert severity="error">{errorMsg}</Alert>
+                            ) : (
+                                <Alert severity="success">{errorMsg}</Alert>
+                            )} */}
+                <DialogActions>
+                  <Button onClick={addproject}>Add</Button>
+                </DialogActions>
+              </Box>
+            </DialogContent>
+            {/* <DialogActions>
+                        <Button onClick={handleClose}>Close</Button>
+                    </DialogActions> */}
+          </Dialog>
+        </React.Fragment>
+      );
+                  } 
+
+       else{
+         return(
+           <></>
+         )
+       }           
+  }
 
 const tags = [
   { name: "Tag 1" },
@@ -297,3 +322,4 @@ const tags = [
   { name: "Tag 3" },
   { name: "Tag 4" },
 ];
+

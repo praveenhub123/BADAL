@@ -1,6 +1,17 @@
+import * as React from 'react';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
+import Grid from '@mui/material/Grid';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import { useQuery, useMutation } from "@apollo/client";
+import { GET_SKILLS } from "../graphQL/query"
+import { GET_ALL_COMPANIES } from '../graphQL/query';
+import FormGroup from '@mui/material/FormGroup';
+import { Autocomplete } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import {
@@ -16,6 +27,16 @@ import {
 // import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const Register = () => {
+    const [Skills, setSkills] = React.useState('');
+    const { data } = useQuery(GET_SKILLS)
+    const { data: Companydata } = useQuery(GET_ALL_COMPANIES);
+
+    var [tagOptions, setTagOptions] = React.useState([])
+    var [tagCompanies, setTagCompanies] = React.useState([])
+   
+
+    var [Tags, setTags] = React.useState([])
+   
     const router = useRouter();
     const formik = useFormik({
         initialValues: {
@@ -26,6 +47,10 @@ const Register = () => {
             address: "some address",
             pincode: "some pincode",
             isAdmin: "NO",
+            company:'',
+            skills:'',
+            experience:'',
+            available:''
         },
         validationSchema: Yup.object({
             email: Yup
@@ -55,12 +80,72 @@ const Register = () => {
                 .oneOf(
                     [true],
                     'This field must be checked'
-                )
+                ),
+                company: Yup
+                .string()
+                .max(255)
+                .required(
+                    'Company is required'),
+                skills: Yup
+                .string()
+                .max(255)
+                .required(
+                    'Select atleast one'),
+                experience: Yup
+                .number()
+                .max(255)
+                .required(
+                    'Year is required'),
+                available: Yup
+                .number()
+                .max(255)
+                .required(
+                    'Months is required'),
         }),
         onSubmit: () => {
             router.push('/');
         }
     });
+
+
+    React.useEffect(() => {
+        if (data) {
+            console.log(GET_SKILLS)
+          var names = []
+          data.GetSkills.forEach((x) => {
+            names.push({
+              name: x.skill,
+              id: x._id
+            })
+          })
+          setTagOptions(names)
+        }
+      }, [data])
+
+
+      React.useEffect(() => {
+        if (Companydata) {
+            console.log(GET_ALL_COMPANIES)
+          var companies = []
+          Companydata.GetCompany.forEach((x) => {
+            companies.push({
+              label: x.name,
+              value: x._id
+            })
+          })
+          setTagCompanies(companies)
+        }
+      }, [Companydata])
+
+
+
+      const handleTags = (v) => {
+        var s = []
+        v.forEach((x) => {
+          s.push(x.id)
+        })
+        setTags(s);
+      }
 
     const handleSignIn = () => {
         // console.log(formik.values.email, formik.values.password);
@@ -79,7 +164,7 @@ const Register = () => {
         <>
             <Head>
                 <title>
-                    Register | Material Kit
+                    Badal
                 </title>
             </Head>
             <Box
@@ -88,12 +173,13 @@ const Register = () => {
                     alignItems: 'center',
                     display: 'flex',
                     flexGrow: 1,
-                    minHeight: '100%'
+                    minHeight: '100%',
+                    margin:7,
                 }}
             >
-                <Container maxWidth="sm" style={{ marginTop: "10%" }}>
+                <Container maxWidth="sm" style={{ marginTop: "5%" }}>
                     <form onSubmit={formik.handleSubmit}>
-                        <Box sx={{ my: 3 }}>
+                        <Box >
                             <Typography
                                 color="textPrimary"
                                 variant="h4"
@@ -108,30 +194,39 @@ const Register = () => {
                                 Use your email to create a new account
                             </Typography>
                         </Box>
-                        <TextField
-                            error={Boolean(formik.touched.firstName && formik.errors.firstName)}
-                            fullWidth
-                            helperText={formik.touched.firstName && formik.errors.firstName}
-                            label="First Name"
-                            margin="normal"
-                            name="firstName"
-                            onBlur={formik.handleBlur}
-                            onChange={formik.handleChange}
-                            value={formik.values.firstName}
-                            variant="outlined"
-                        />
-                        <TextField
-                            error={Boolean(formik.touched.lastName && formik.errors.lastName)}
-                            fullWidth
-                            helperText={formik.touched.lastName && formik.errors.lastName}
-                            label="Last Name"
-                            margin="normal"
-                            name="lastName"
-                            onBlur={formik.handleBlur}
-                            onChange={formik.handleChange}
-                            value={formik.values.lastName}
-                            variant="outlined"
-                        />
+
+                        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{my:1}}>
+                            <Grid item xs={6}>
+                                <TextField
+                                    error={Boolean(formik.touched.firstName && formik.errors.firstName)}
+                                    fullWidth
+                                    helperText={formik.touched.firstName && formik.errors.firstName}
+                                    label="First Name"
+                                    margin="normal"
+                                    name="firstName"
+                                    onBlur={formik.handleBlur}
+                                    onChange={formik.handleChange}
+                                    value={formik.values.firstName}
+                                    variant="outlined"
+                                />
+                            </Grid>
+
+                            <Grid item xs={6}>
+                                <TextField
+                                    error={Boolean(formik.touched.lastName && formik.errors.lastName)}
+                                    fullWidth
+                                    helperText={formik.touched.lastName && formik.errors.lastName}
+                                    label="Last Name"
+                                    margin="normal"
+                                    name="lastName"
+                                    onBlur={formik.handleBlur}
+                                    onChange={formik.handleChange}
+                                    value={formik.values.lastName}
+                                    variant="outlined"
+                                />
+                            </Grid>
+                        </Grid>
+
                         <TextField
                             error={Boolean(formik.touched.email && formik.errors.email)}
                             fullWidth
@@ -156,8 +251,83 @@ const Register = () => {
                             onChange={formik.handleChange}
                             type="password"
                             value={formik.values.password}
-                            variant="outlined"
-                        />
+                            variant="outlined"/>
+
+                            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{my:1}}>
+                                                <Grid item xs={6}>
+                                                        <FormControl fullWidth required>
+                                                        <Autocomplete
+                                                            disablePortal
+                                                            error={Boolean(formik.touched.company && formik.errors.company)}
+                                                            id="tags-standard"
+                                                            helperText={formik.touched.company && formik.errors.company}
+                                                            options={tagCompanies}
+                                                            getOptionLabel={(option) => option.label}
+                                                            renderInput={(params) => (
+                                                                <TextField
+                                                                {...params}
+                                                                variant="outlined"
+                                                                label="Select Company"
+                                                                />
+                                                            )}  />
+                                                        </FormControl>
+                                                 </Grid>
+                                                <Grid item xs={6}>
+                                                     <FormControl fullWidth>
+                                                     <Autocomplete
+                                                            multiple
+                                                            error={Boolean(formik.touched.skills && formik.errors.skills)}
+                                                            id="tags-standard"
+                                                            helperText={formik.touched.skills && formik.errors.skills}
+                                                            options={tagOptions}
+                                                            onChange={(_, v) => handleTags(v)}
+                                                            getOptionLabel={(option) => option.name}
+                                                            renderInput={(params) => (
+                                                                <TextField
+                                                                {...params}
+                                                                variant="outlined"
+                                                                label="Select Skills"
+                                                                />
+                                                            )}  />
+                                                     </FormControl>
+                                                </Grid>
+                                                <Grid item xs={6}>
+                                                <TextField
+                                                    error={Boolean(formik.touched.experience && formik.errors.experience)}
+                                                    fullWidth
+                                                    helperText={formik.touched.experience && formik.errors.experience}
+                                                    label="Years of Experience"
+                                                    margin="normal"
+                                                    name="experience"
+                                                    onBlur={formik.handleBlur}
+                                                    onChange={formik.handleChange}
+                                                    type="experience"
+                                                    value={formik.values.experience}
+                                                    variant="outlined"
+                                                />
+                       
+                                                 </Grid>
+                                                <Grid item xs={6}>
+                                                <TextField
+                                                    error={Boolean(formik.touched.available && formik.errors.available)}
+                                                    fullWidth
+                                                    helperText={formik.touched.available && formik.errors.available}
+                                                    label="Months of Availability"
+                                                    margin="normal"
+                                                    name="available"
+                                                    onBlur={formik.handleBlur}
+                                                    onChange={formik.handleChange}
+                                                    type="available"
+                                                    value={formik.values.available}
+                                                    variant="outlined"
+                                                />
+                                                </Grid>
+                                        </Grid>
+                           
+
+                            
+
+
                         <Box
                             sx={{
                                 alignItems: 'center',

@@ -10,9 +10,16 @@ import { Google as GoogleIcon } from '../icons/google';
 import { useQuery, gql } from "@apollo/client";
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
+
+export function handleLogout(){
+    localStorage.removeItem('LoginStatus');  // delete the item
+    sessionStorage.clear();
+}
+
 const Login = () => {
+
+    const [loggedIn, setLoggedIn] = useState(sessionStorage.getItem("LoginStatus"));
     let navigate = useNavigate();
-    const [loginData, setLoginData] = useState();
     const [errors, setErrors] = useState("");
     const router = useRouter();
     const formik = useFormik({
@@ -74,19 +81,23 @@ const Login = () => {
                     setErrors(resData.errors[0].message);
                 }
                 else {
-                    navigate("/ngo");
-                    setErrors("");
-                    console.log(resData.data.login.token)
+                    sessionStorage.setItem("LoginStatus", true);
+                    setLoggedIn(true);
                     sessionStorage.setItem("token", resData.data.login.token);
                     sessionStorage.setItem("teamId", resData.data.login.teamId);
                     sessionStorage.setItem("userRole", resData.data.login.userRole);
+                    navigate("/ngo");
+                    setErrors("");
+                   
                 }
             })
             .catch(err => {
                 console.log(err);
             });
     }
+      
 
+   
 
     return (
         <>
@@ -108,84 +119,25 @@ const Login = () => {
                         marginTop: "10%",
                     }}
                 >
-                    <Link
-                        href="/signup"
-                        underline='none'
-                        passHref
-                    >
-                        <Button
-                            component="a"
-                            startIcon={<ArrowBackIcon fontSize="small" />}
-                        >
-                            Dashboard
-                        </Button>
-                    </Link>
+                    
                     <form onSubmit={formik.handleSubmit}>
-                        <Box sx={{ my: 3 }}>
+                        <Box sx={{ my: 3 }}
+                        centered
+                        justifyContent="center">
                             <Typography
                                 color="textPrimary"
-                                variant="h4"
-                            >
+                                variant="h4">
                                 Sign in
-                            </Typography>
-                            <Typography
-                                color="textSecondary"
-                                gutterBottom
-                                variant="body2"
-                            >
-                                Sign in on the internal platform
-                            </Typography>
+                            </Typography>   
                         </Box>
-                        <Grid
-                            container
-                            spacing={3}
-                        >
-                            <Grid
-                                item
-                                xs={12}
-                                md={6}
-                            >
-                                <Button
-                                    color="info"
-                                    fullWidth
-                                    startIcon={<FacebookIcon />}
-                                    onClick={formik.handleSubmit}
-                                    size="large"
-                                    variant="contained"
-                                >
-                                    Login with Facebook
-                                </Button>
-                            </Grid>
-                            <Grid
-                                item
-                                xs={12}
-                                md={6}
-                            >
-                                <Button
-                                    fullWidth
-                                    color="error"
-                                    startIcon={<GoogleIcon />}
-                                    onClick={formik.handleSubmit}
-                                    size="large"
-                                    variant="contained"
-                                >
-                                    Login with Google
-                                </Button>
-                            </Grid>
-                        </Grid>
+                       
                         <Box
                             sx={{
                                 pb: 1,
-                                pt: 3
+                                pt: 0
                             }}
                         >
-                            <Typography
-                                align="center"
-                                color="textSecondary"
-                                variant="body1"
-                            >
-                                or login with email address
-                            </Typography>
+                        
                         </Box>
                         <TextField
                             error={Boolean(formik.touched.email && formik.errors.email)}
@@ -252,4 +204,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Login ; 

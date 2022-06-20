@@ -180,19 +180,19 @@ module.exports = {
       },
 
       GetCompany : async (args,req) => {
-        if(!req.isAuth)
-        {
-          throw new Error(errorName.UNAUTHORIZED);
-        }
-        try{
+        // if(!req.isAuth)
+        // {
+        //   throw new Error(errorName.UNAUTHORIZED);
+        // }
+        // try{
           const company= await Organisation.find({});
           return company.map(company => {
             return {...company._doc,_id:company.id};
           });
-        }
-        catch{
-          throw err;
-        }
+        // }
+        // catch{
+        //   throw err;
+        // }
       },
       GetEmployeeForCompany : async (args,req) => {
         if(!req.isAuth)

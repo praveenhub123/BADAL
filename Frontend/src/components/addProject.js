@@ -26,6 +26,7 @@ export default function AddProject(props) {
   const [open, setOpen] = React.useState(false);
   const [fullWidth, setFullWidth] = React.useState(true);
   const [maxWidth, setMaxWidth] = React.useState("sm");
+  const userrole = sessionStorage.getItem('userRole')
 
   const addproject = async () => {
 
@@ -73,6 +74,7 @@ export default function AddProject(props) {
     }
   })
 
+  if(userrole==='CORE') {
   return (
     <React.Fragment>
       <Button
@@ -191,4 +193,10 @@ export default function AddProject(props) {
       </Dialog>
     </React.Fragment>
   );
+}
+else{
+  return(
+    <></>
+  )
+}
 }
