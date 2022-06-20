@@ -1,6 +1,6 @@
 import LandingPage from "./components/materialSignin";
 import SignupPage from "./components/materialSignup";
-import { BrowserRouter, Routes, Route, UNSAFE_RouteContext } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Companies from "./components/pages/companies";
 import { DashboardLayout } from "./components/default";
 import Projects from "./components/pages/projects";
@@ -27,12 +27,10 @@ import { ApolloProvider } from "@apollo/client";
 // });
 
 const App = () => {
-  const UserContext = createContext();
   return (
     <ApolloProvider client={client}>
       <BrowserRouter>
         <Navbar />
-        <UserContext.provider>
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
           <Route path="/signup" element={<SignupPage />} />
@@ -71,7 +69,6 @@ const App = () => {
             Powered by real page
           </div>
         </Box>
-        </UserContext.provider>
       </BrowserRouter>
     </ApolloProvider>
   );
