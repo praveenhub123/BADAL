@@ -15,7 +15,6 @@ import { GET_NGO } from "../../graphQL/query"
 
 function Companies() {
   const [query, setQuery] = useState("");
-
   const [characterResults, setCharacterResults] = useState([])
 
   function handleOnSearch({ currentTarget = {} }) {
@@ -24,6 +23,7 @@ function Companies() {
   }
 
   const { data } = useQuery(GET_NGO)
+
 
   useEffect(() => {
     if (data) {

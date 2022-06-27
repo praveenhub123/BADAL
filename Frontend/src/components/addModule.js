@@ -191,12 +191,12 @@ export default function AddModule(props) {
             sx={{
               display: "flex",
               flexDirection: "column",
-              m: "auto",
+              // m: "auto",
               width: "400px",
             }}
           >
+
             <TextField
-              autoFocus
               margin="dense"
               id="Pname"
               label="Module Title"
@@ -233,6 +233,7 @@ export default function AddModule(props) {
                 />
               )}
             />
+
              <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{my:1}}>
                             <Grid item xs={6}>
                             <TextField
@@ -246,7 +247,7 @@ export default function AddModule(props) {
                                     </InputAdornment>
                                   ),
                                 }}
-                                variant="outlined"
+                                variant="standard"
                               />
                             </Grid>
 
@@ -285,9 +286,8 @@ export default function AddModule(props) {
                                               <MenuItem value={30}>High</MenuItem>
                             </Select>
             </FormControl>                           
+            
             <TextField
-              autoFocus
-              // margin="dense"
               id="Pname"
               label="Sub Directory Link"
               type="link"
@@ -295,48 +295,60 @@ export default function AddModule(props) {
               variant="standard"
               onChange={handleSub}
             />
+           
+           <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{my:1}}>
+            <Grid item xs={6}>
             <Button
+              fullWidth
               variant="outlined"
               style={{
                 marginTop: 8,
                 maxHeight: 28,
-                borderRadius: 10,
               }}
               component="label"
             >
               <AddIcon /> Requirements
               <input type="file" id="req" hidden />
             </Button>
+            </Grid>
+
+            <Grid item xs={6}>
             <Button
+              fullWidth
               variant="outlined"
               style={{
                 marginTop: 8,
                 maxHeight: 28,
-                borderRadius: 10,
               }}
               component="label"
             >
               <AddIcon /> UI Screens
               <input type="file" id="ui" hidden />
             </Button>
+            </Grid>
+           
+            <Grid item xs={6}>
             <Button
+              fullWidth
               variant="outlined"
               style={{
                 marginTop: 8,
                 maxHeight: 28,
-                borderRadius: 10,
               }}
               component="label"
             >
               <AddIcon /> API Build
               <input type="file" id="api" hidden />
             </Button>
+            </Grid>
+           
+            <Grid item xs={6}>
             <Button
+              fullWidth
               variant="outlined"
               style={{
                 marginTop: 8,
                 maxHeight: 28,
-                borderRadius: 10,
               }}
               component="label"
             >
@@ -344,24 +356,9 @@ export default function AddModule(props) {
               <AddIcon /> DB Build
               <input type="file" id="db" hidden />
             </Button>
-            {/* <FormControl sx={{ mt: 2, minWidth: 120 }}>
-                            <InputLabel htmlFor="status">Status</InputLabel>
-                            <Select
-                                autoFocus
-                                value={status}
-                                onChange={handleStatusChange}
-                                label="maxWidth"
-                                inputProps={{
-                                    name: 'max-width',
-                                    id: 'max-width',
-                                }}
-                            >
-                                <MenuItem value="">Applied</MenuItem>
-                                <MenuItem value="Reviewing">Reviewing</MenuItem>
-                                <MenuItem value="Accepted">Accepted</MenuItem>
-                                <MenuItem value="Rejected">Rejected</MenuItem>
-                            </Select>
-                        </FormControl> */}
+            </Grid>
+          </Grid>
+
             <DialogActions>
               <Button onClick={checkPassword}>Done</Button>
             </DialogActions>

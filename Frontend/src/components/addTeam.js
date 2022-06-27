@@ -155,7 +155,7 @@ export default function AddTeam(props) {
   
   };
 
-  if(userrole==='COMP'||'CORE') {
+  if(userrole==='CORE') {
   return (
     <React.Fragment>
       <Button

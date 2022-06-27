@@ -88,7 +88,6 @@ const Login = () => {
                     sessionStorage.setItem("userRole", resData.data.login.userRole);
                     navigate("/ngo");
                     setErrors("");
-                   
                 }
             })
             .catch(err => {

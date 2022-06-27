@@ -96,11 +96,6 @@ const Register = () => {
                 .max(255)
                 .required(
                     'Year is required'),
-                available: Yup
-                .number()
-                .max(255)
-                .required(
-                    'Months is required'),
         }),
         onSubmit: () => {
             router.push('/');
@@ -170,14 +165,15 @@ const Register = () => {
             <Box
                 component="main"
                 sx={{
+                    scrollBehavior:'auto',
                     alignItems: 'center',
                     display: 'flex',
                     flexGrow: 1,
                     minHeight: '100%',
-                    margin:7,
+                    // margin:7,
                 }}
             >
-                <Container maxWidth="sm" style={{ marginTop: "5%" }}>
+                <Container maxWidth="sm" style={{ marginTop: "2%" }}>
                     <form onSubmit={formik.handleSubmit}>
                         <Box >
                             <Typography
@@ -255,7 +251,7 @@ const Register = () => {
 
                             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{my:1}}>
                                                 <Grid item xs={6}>
-                                                        <FormControl fullWidth required>
+                                                     <FormControl fullWidth required>
                                                         <Autocomplete
                                                             disablePortal
                                                             error={Boolean(formik.touched.company && formik.errors.company)}
@@ -270,16 +266,35 @@ const Register = () => {
                                                                 label="Select Company"
                                                                 />
                                                             )}  />
-                                                        </FormControl>
-                                                 </Grid>
+                                                        </FormControl>           
+                                                    
+                                                </Grid>
+                                               
                                                 <Grid item xs={6}>
-                                                     <FormControl fullWidth>
-                                                     <Autocomplete
+                                                     <TextField
+                                                    error={Boolean(formik.touched.experience && formik.errors.experience)}
+                                                    fullWidth
+                                                    helperText={formik.touched.experience && formik.errors.experience}
+                                                    label="Years of Experience"
+                                                    name="experience"
+                                                    onBlur={formik.handleBlur}
+                                                    onChange={formik.handleChange}
+                                                    type="experience"
+                                                    value={formik.values.experience}
+                                                    variant="outlined"
+                                                             />
+                                                  </Grid>  
+                                                  </Grid>
+
+                                              <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{my:2}}>
+                                                <Grid item xs={12}>
+                                                  <Autocomplete
                                                             multiple
                                                             error={Boolean(formik.touched.skills && formik.errors.skills)}
                                                             id="tags-standard"
                                                             helperText={formik.touched.skills && formik.errors.skills}
                                                             options={tagOptions}
+                                                            margin="normal"
                                                             onChange={(_, v) => handleTags(v)}
                                                             getOptionLabel={(option) => option.name}
                                                             renderInput={(params) => (
@@ -289,44 +304,8 @@ const Register = () => {
                                                                 label="Select Skills"
                                                                 />
                                                             )}  />
-                                                     </FormControl>
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                <TextField
-                                                    error={Boolean(formik.touched.experience && formik.errors.experience)}
-                                                    fullWidth
-                                                    helperText={formik.touched.experience && formik.errors.experience}
-                                                    label="Years of Experience"
-                                                    margin="normal"
-                                                    name="experience"
-                                                    onBlur={formik.handleBlur}
-                                                    onChange={formik.handleChange}
-                                                    type="experience"
-                                                    value={formik.values.experience}
-                                                    variant="outlined"
-                                                />
-                       
-                                                 </Grid>
-                                                <Grid item xs={6}>
-                                                <TextField
-                                                    error={Boolean(formik.touched.available && formik.errors.available)}
-                                                    fullWidth
-                                                    helperText={formik.touched.available && formik.errors.available}
-                                                    label="Months of Availability"
-                                                    margin="normal"
-                                                    name="available"
-                                                    onBlur={formik.handleBlur}
-                                                    onChange={formik.handleChange}
-                                                    type="available"
-                                                    value={formik.values.available}
-                                                    variant="outlined"
-                                                />
-                                                </Grid>
-                                        </Grid>
-                           
-
-                            
-
+                                           </Grid>
+                                           </Grid>
 
                         <Box
                             sx={{
