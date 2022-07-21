@@ -54,11 +54,12 @@ exports.errorType={
     }
 }
 
-exports.usertypeName = ["NGO","CORE","COMP"];
+exports.usertypeName = ["NGO","CORE","COMP","DEV"];
 
 
 exports.usertype = {
     NGO : "NGO",
     CORE : "CORE",
-    COMP : "COMP"
+    COMP : "COMP",
+    DEV:"DEV"
 }
