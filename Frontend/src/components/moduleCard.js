@@ -36,9 +36,7 @@ export const ModuleCard = ({ product, ...rest }) => {
     return name.slice(0, num) + "...";
   };
 
-  const q = sessionStorage.getItem("type");
-  let q1 = "ngo";
-
+  
   const [assignTeam] = useMutation(ASSIGN_MODULE_TO_TEAM, {
     onCompleted: () => {
       alert("Team has been assigned")
@@ -49,18 +47,17 @@ export const ModuleCard = ({ product, ...rest }) => {
   })
 
   const handleSelect = (e) => {
-    if (window.confirm("Are you sure you want to assign this module to your team?")) {
+    
       assignTeam({
         variables: {
           teamId: sessionStorage.getItem("teamId"),
           moduleId: product._id
         }
       })
-    } 
-  }
+  } 
+
 
   const handleClick = () => {
-    if (q !== q1) {
       console.log(product.module_Id)
       sessionStorage.setItem("moduleId", product._id)
       navigate(`/tasks`, {
@@ -76,7 +73,7 @@ export const ModuleCard = ({ product, ...rest }) => {
         },
       })
     }
-  }
+  
 
   return (
     <Card

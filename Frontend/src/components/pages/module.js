@@ -114,11 +114,9 @@ function Module(props) {
   const cResults = query ? results.map((result) => result.item) : moduleList;
 
   const MyAddModule = (props) => {
-    const q = sessionStorage.getItem("type");
-    let q1 = "core-team";
-    if (q == q1) {
+    
       return <AddModule style={{ ...props.style }} name={location.state.name} />;
-    }
+    
   };
 
   const [status, setStatus] = React.useState("");
@@ -239,65 +237,7 @@ function Module(props) {
               </Grid>
             </Grid>
 
-            {/*
-            <Grid
-              item
-              xs={3}
-              display="flex"
-              sx={{
-                justifyContent: "center",
-                alignContent: "Center",
-              }}
-            >
-              <ul>
-                <li>
-                  <GitHubIcon
-                    fontSize="large"
-                    sx={{ marginLeft: 1, marginTop: 2 }}
-                  />
-                </li>
-              </ul>
-            </Grid> */}
-            {/* <Grid item xs={3}>
-              <ul>
-                <li>
-                  <Typography
-                    display="flex"
-                    sx={{
-                      justifyContent: "center",
-                      alignContent: "Center",
-                      paddingTop: "16px",
-                    }}
-                  >
-                    Tags
-                  </Typography>
-                </li>
-                <li>
-                  <Typography
-                    display="flex"
-                    sx={{
-                      justifyContent: "center",
-                      alignContent: "Center",
-                      //paddingTop: "20px",
-                      paddingBottom: "10px",
-                    }}
-                  >
-                    {tags.map((pr) => (
-                      <Chip
-                        label={pr}
-                        variant="outlined"
-                        size="small"
-                        style={{
-                          width: "min-content",
-                          marginLeft: 1,
-                          marginTop: 2,
-                        }}
-                      />
-                    ))}
-                  </Typography>
-                </li>
-              </ul>
-            </Grid> */}
+            
           </Grid>
         </Card>
 
@@ -325,26 +265,7 @@ function Module(props) {
           </Box>
           <MyAddModule style={{ marginLeft: "20px" }} />
 
-          {/* <Grid
-            item
-            xs={2.5}
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              alignContent: "center",
-              marginTop: 3,
-            }}
-          >
-            <div style={{ width: "200px" }}>
-              <Select
-                placeholder="Select company ..."
-                value={selectedOption}
-                onChange={handleChange}
-                options={Com}
-              ></Select>
-            </div>
-          </Grid> */}
+       
         </Grid>
         <Container maxHeight={true} maxWidth={false}>
           <Box sx={{ pt: 3 }}>

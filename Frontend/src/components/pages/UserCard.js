@@ -243,6 +243,14 @@ export default function BoxSx() {
                   {address}
                 </ListItemText>
               </ListItem>
+              <ListItem>
+                <ListItemText>Team</ListItemText>
+                <ListItemText
+                  style={{ display: "flex", justifyContent: "flex-end" }}
+                >
+                  {address}
+                </ListItemText>
+              </ListItem>
             </List>
           </li>
           <li

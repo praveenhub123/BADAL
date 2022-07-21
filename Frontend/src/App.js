@@ -17,7 +17,7 @@ import UserCard from "./components/pages/UserCard";
 import Box from "@mui/material/Box";
 import Test from "./components/test";
 import { Divider, Typography } from "@mui/material";
-import Header from "../src/components/Navbar/Header";
+import Header from "../src/components/Header";
 
 // GraphQL
 import { client } from "./Apollo";

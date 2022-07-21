@@ -11,12 +11,8 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { useMutation, useQuery } from "@apollo/client";
 import { CREATE_TEAM } from "../graphQL/mutations"
 import { GET_EMPLOYEES_FOR_COMPANY, GET_SKILLS } from "../graphQL/query"
-/* import FormControl from "@mui/material/FormControl";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
-import Switch from "@mui/material/Switch"; */
+import InputAdornment from '@mui/material/InputAdornment';
+import { Divider } from "@mui/material";
 import { TextField } from "@mui/material";
 import { render } from "@testing-library/react";
 //import Alert from "@mui/material/Alert";
@@ -167,7 +163,7 @@ export default function AddTeam(props) {
       </Button>
       <Dialog
         fullWidth={fullWidth}
-        maxWidth={maxWidth}
+        Width="500px"
         open={open}
         onClose={handleClose}
       >
@@ -181,23 +177,11 @@ export default function AddTeam(props) {
               display: "flex",
               flexDirection: "column",
               m: "auto",
-              width: "300px",
+              width: "400px",
             }}
           >
-            {/* <TextField
-              autoFocus
-              margin="dense"
-              id="Pname"
-              label="Team ID"
-              type="text"
-              fullWidth
-              variant="standard"
-              // value={pname}
-              // onChange={handlePasswordInput}
-              // onKeyDown={handlePasswordInput}
-            /> */}
+            
             <TextField
-              // autoFocus
               multiline
               margin="dense"
               id="password"
@@ -205,32 +189,15 @@ export default function AddTeam(props) {
               type="text"
               fullWidth
               variant="standard"
-              // value={problemStatement}
               onChange={handleName}
-              // onKeyDown={handlePasswordInput}
             />
-            {/* <Grid item xs={0}>
-              <TextField
-                // autoFocus
-                multiline
-                margin="dense"
-                id="password"
-                label="Members"
-                type="text"
-                fullWidth
-                variant="standard"
-                // value={problemStatement}
-                // onChange={handlePasswordInput}
-                // onKeyDown={handlePasswordInput}
-              />
-            </Grid> */}
+            
             <Autocomplete
               multiple
               id="tags-standard"
               options={participantsO}
               getOptionLabel={(option) => option.name}
               onChange={(e, v) => handleParticipantsChange(e,v)}
-              //defaultValue={[top100Films[13]]}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -245,7 +212,6 @@ export default function AddTeam(props) {
               id="tags-standard"
               options={tagOptions}
               getOptionLabel={(option) => option.name}
-              //defaultValue={[top100Films[13]]}
               onChange={(e, v) => handleSkillsChange(e, v)}
               renderInput={(params) => (
                 <TextField
@@ -257,6 +223,17 @@ export default function AddTeam(props) {
                 />
               )}
             />
+            <TextField
+               label="Availability"
+               InputProps={{
+               endAdornment: (
+               <InputAdornment position="end">
+               <Divider orientation="vertical"/>
+               Hours Per Month
+               </InputAdornment>
+                ),}}
+               variant="standard"
+               />
             {/* <Autocomplete
               multiple
               id="tags-standard"

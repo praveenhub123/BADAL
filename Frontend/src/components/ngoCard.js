@@ -27,6 +27,7 @@ const handleChange = (sOption) => {
  */
 export function NgoCard({ product, ...rest }) {
   let navigate = useNavigate();
+  const login = sessionStorage.getItem('LoginStatus');
 
   const truncate = (desc) => {
     const num = 32;
@@ -48,7 +49,9 @@ export function NgoCard({ product, ...rest }) {
     /* sessionStorage.setItem("type", "ngo"); */
     sessionStorage.setItem("entity", product.name);
     sessionStorage.setItem("ngoId", product.id);
-    navigate(`/projects`);
+    if ( login === 'true') {
+      navigate(`/projects`);
+    }
   };
 
   return (

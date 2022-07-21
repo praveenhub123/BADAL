@@ -13,6 +13,8 @@ import { GET_ALL_COMPANIES } from '../graphQL/query';
 import FormGroup from '@mui/material/FormGroup';
 import { Autocomplete } from '@mui/material';
 import { useFormik } from 'formik';
+import InputAdornment from '@mui/material/InputAdornment';
+import { Divider } from "@mui/material";
 import * as Yup from 'yup';
 import {
     Box,
@@ -275,12 +277,19 @@ const Register = () => {
                                                     error={Boolean(formik.touched.experience && formik.errors.experience)}
                                                     fullWidth
                                                     helperText={formik.touched.experience && formik.errors.experience}
-                                                    label="Years of Experience"
+                                                    label="Experience"
                                                     name="experience"
                                                     onBlur={formik.handleBlur}
                                                     onChange={formik.handleChange}
                                                     type="experience"
                                                     value={formik.values.experience}
+                                                    InputProps={{
+                                                    endAdornment: (
+                                                        <InputAdornment position="end">
+                                                        <Divider orientation="vertical"/>
+                                                        Years
+                                                        </InputAdornment>
+                                                         ),}}
                                                     variant="outlined"
                                                              />
                                                   </Grid>  

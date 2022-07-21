@@ -2,14 +2,10 @@ import React, { useEffect, useState } from "react";
 import "./NewNavbar.css";
 import { NavLink } from "react-router-dom";
 import $ from "jquery";
-// import CloudIcon from "@mui/icons-material/Cloud";
 import FilterDramaIcon from '@mui/icons-material/FilterDrama';
 import Fuse from "fuse.js";
 import LogoutIcon from "@mui/icons-material/Logout";
-import LoginIcon from "@mui/icons-material/Login";
 import {handleLogout} from "./materialSignin"
-import { Typography, Avatar } from "@material-ui/core";
-import sitelogo from "../icons/site-logo.png"
 const pages = [
   
   {

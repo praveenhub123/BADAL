@@ -5,15 +5,15 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Box, Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Facebook as FacebookIcon } from '../icons/facebook';
-import { Google as GoogleIcon } from '../icons/google';
 import { useQuery, gql } from "@apollo/client";
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from "react-router-dom";
+// import { UserContext } from '../App';
+
+
 
 export function handleLogout(){
-    localStorage.removeItem('LoginStatus');  // delete the item
-    sessionStorage.clear();
+    sessionStorage.clear();   
 }
 
 const Login = () => {
@@ -46,7 +46,7 @@ const Login = () => {
         }
     });
 
-    const handleSignIn = () => {
+    const handleSignIn = (state={},action) => {
         let requestBody = {
             query: `
               query Login($email: String!, $password: String!) {
@@ -72,15 +72,18 @@ const Login = () => {
                     throw new Error('Failed!');
                 }
                 // console.log(res);
+                else{
+
+                }
                 return res.json();
             })
             .then(resData => {
-                // console.log(resData.data.login.token);
-                // console.log(Object.keys(resData)[0], Object.keys(resData)[1]);
                 if (Object.keys(resData)[0] === "errors") {
                     setErrors(resData.errors[0].message);
                 }
                 else {
+                    // dispatch({sessionStorage.setItem("LoginStatus", true)});
+                    // setLoggedIn(true);});
                     sessionStorage.setItem("LoginStatus", true);
                     setLoggedIn(true);
                     sessionStorage.setItem("token", resData.data.login.token);
@@ -95,8 +98,6 @@ const Login = () => {
             });
     }
       
-
-   
 
     return (
         <>

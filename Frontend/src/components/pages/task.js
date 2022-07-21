@@ -75,7 +75,7 @@ function Task(props) {
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState(false);
   const [taskList, setTaskList] = useState([]);
-
+  const userrole = sessionStorage.getItem('userRole');
   const [teamMembers, setTeamMembers] = useState([]);
   const [loadUsers, setLoadUsers] = useState(false);
 
@@ -148,6 +148,7 @@ function Task(props) {
   });
 
   const [assignToUser] = useMutation(ASSIGN_TASK_TO_USER, {
+    
     onCompleted: (resp) => {
       alert(
         `Task has been assigned to ${resp.AssignTaskToUser.assigned_to.name}`
@@ -187,7 +188,7 @@ function Task(props) {
   };
 
   const handleAssignedToChange = async (event, prod) => {
-    await assignToUser({
+      await assignToUser({
       variables: {
         taskId: prod._id,
         UserId: event.target.value,
@@ -458,7 +459,7 @@ function Task(props) {
                   <TableCell align="left">{project.description}</TableCell>
                   {/* <TableCell align="center">{project.status}</TableCell> */}
                   <TableCell align="right">
-                    <FormControl sx={{ mt: 2, minWidth: 120 }}>
+                    <FormControl sx={{ minWidth: 130 }}>
                       <InputLabel htmlFor="status">Status</InputLabel>
                       <Select
                         value={project.status.toUpperCase()}
@@ -478,7 +479,7 @@ function Task(props) {
                     </FormControl>
                   </TableCell>
                   <TableCell align="right">
-                    <FormControl sx={{ mt: 2, minWidth: 120 }}>
+                    <FormControl sx={{  minWidth: 120,minHeight:20 }}>
                       <InputLabel htmlFor="assigned">Assigned To</InputLabel>
                       <Select
                         value={project.assigned_to?._id}

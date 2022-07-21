@@ -26,6 +26,7 @@ export default function AddTask(props) {
   const [status, setStatus] = React.useState(props.status);
   const [password, setPassword] = React.useState("");
   const [defaultStatus, setdefaultStatus] = React.useState(props.status);
+  const userrole = sessionStorage.getItem('userRole')
 
 
   const [name, setName] = React.useState("");
@@ -76,6 +77,7 @@ export default function AddTask(props) {
 
   };
 
+  if(userrole==='COMP') {
   return (
     <React.Fragment>
       <Button
@@ -164,4 +166,10 @@ export default function AddTask(props) {
       </Dialog>
     </React.Fragment>
   );
+}
+else{
+  return(
+    <></>
+  )
+}
 }

@@ -6,24 +6,14 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-//import FormControl from '@mui/material/FormControl';
-//import FormControlLabel from '@mui/material/FormControlLabel';
-//import InputLabel from '@mui/material/InputLabel';
-//import MenuItem from '@mui/material/MenuItem';
-//import Select from '@mui/material/Select';
-//import Switch from '@mui/material/Switch';
 import { TextField } from "@mui/material";
-import Autocomplete from "@mui/material/Autocomplete";
 import { projectsList } from "../data/projectsList";
-import { v4 as uuid } from "uuid";
 import { useMutation } from "@apollo/client";
 import { CREATE_NGO } from "../graphQL/mutations";
 import { Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import IconButton from "@mui/material/IconButton";
-import { render } from "@testing-library/react";
-//import Alert from "@mui/material/Alert";
-// import axios from 'axios';
+
 
 
 export default function AddNgo(props) {
@@ -39,6 +29,7 @@ export default function AddNgo(props) {
   const [defaultStatus, setdefaultStatus] = React.useState(props.status);
   const [item, setItem] = React.useState(projectsList);
   const userrole = sessionStorage.getItem('userRole')
+  const login = sessionStorage.getItem('LoginStatus');
 
   const addproject = async () => {
     console.log(name);
@@ -139,34 +130,13 @@ export default function AddNgo(props) {
   const checkPassword = () => {
     const data = { pass: password, id: userId, status: status };
     console.log(data);
-
-    // axios
-    //     .post("https://api.stag-os.org/maintainers/updateStatus", data)
-    //     .then((res) => {
-    //         // console.log(res.data);
-    //         if (res.data.status != 200) {
-    //             setError(true)
-    //             setErrorMsg(res.data.message)
-    //             setStatus(defaultStatus)
-    //         }
-    //         else {
-    //             setdefaultStatus(status)
-    //             setError(false)
-    //             setErrorMsg(res.data.message)
-    //         }
-    //     })
-    //     .catch((err) => {
-    //         // console.log(err);
-    //         setError(true);
-    //         setErrorMsg(err);
-    //     });
     setPassword("");
     setError(false);
   };
 
 
-
-  if(userrole === 'CORE') {
+  if ( login === 'true') {
+    if(userrole === 'CORE') {
   
       return (
         <React.Fragment>
@@ -315,6 +285,12 @@ export default function AddNgo(props) {
          )
        }           
   }
+  else{
+    return(
+      <></>
+    )
+  }
+}
 
 const tags = [
   { name: "Tag 1" },

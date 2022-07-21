@@ -247,7 +247,7 @@ export default function AddModule(props) {
                                     </InputAdornment>
                                   ),
                                 }}
-                                variant="standard"
+                                variant="outlined"
                               />
                             </Grid>
 
@@ -281,9 +281,9 @@ export default function AddModule(props) {
                               label="Complexity"
                               onChange={handleComplexity}
                               >
-                                              <MenuItem value={10}>Low</MenuItem>
-                                              <MenuItem value={20}>Medium</MenuItem>
-                                              <MenuItem value={30}>High</MenuItem>
+                            <MenuItem value={10}>Low</MenuItem>
+                            <MenuItem value={20}>Medium</MenuItem>
+                            <MenuItem value={30}>High</MenuItem>
                             </Select>
             </FormControl>                           
             
