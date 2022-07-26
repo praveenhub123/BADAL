@@ -128,7 +128,7 @@ export default function AddEmployee(props) {
     setError(false);
   };
 
-  if(userrole==='CORE') {
+  if(userrole==='COMP') {
 
   return (
     <React.Fragment>
